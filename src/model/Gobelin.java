@@ -1,10 +1,10 @@
 package model;
 
-public class gobelin extends Ennemi{
+public class Gobelin extends Ennemi{
     private String environement;
 
-    public gobelin(String nom, int pointsDeVie, int force, String race, String classe, String type, String loot, String environement) {
-        super(nom, pointsDeVie, force, race, classe, type, loot);
+    public Gobelin(String nom, int pointsDeVie, int force, String race, String type, String loot, String environement) {
+        super(nom, pointsDeVie, force, race, type, loot);
         this.environement = environement;
     }
 

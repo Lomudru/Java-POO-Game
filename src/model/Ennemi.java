@@ -4,8 +4,8 @@ public class Ennemi extends Personnage {
     private String type;
     private String loot;
 
-    public Ennemi(String nom, int pointsDeVie, int force, String race, String classe, String type, String loot) {
-        super(nom, pointsDeVie, force, race, classe);
+    public Ennemi(String nom, int pointsDeVie, int force, String race, String type, String loot) {
+        super(nom, pointsDeVie, force, race);
         this.type = type;
         this.loot = loot;
     }

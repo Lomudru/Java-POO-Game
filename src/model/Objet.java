@@ -1,6 +1,6 @@
 package model;
 
-public class Objet {
+public abstract class Objet {
     private String nom;
     private int rarete;
     private String description;

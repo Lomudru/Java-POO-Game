@@ -1,11 +1,11 @@
 package model;
 
-public class slime extends Ennemi {
+public class Slime extends Ennemi {
     private String couloeur;
     private String element;
 
-    public slime(String nom, int pointsDeVie, int force, String race, String classe, String type, String loot, String couloeur, String element) {
-        super(nom, pointsDeVie, force, race, classe, type, loot);
+    public Slime(String nom, int pointsDeVie, int force, String race, String type, String loot, String couloeur, String element) {
+        super(nom, pointsDeVie, force, race, type, loot);
         this.couloeur = couloeur;
         this.element = element;
     }
