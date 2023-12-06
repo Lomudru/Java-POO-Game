@@ -1,6 +1,6 @@
 package model;
 
-public class Personnage {
+public class Personnage implements Interactuable {
     private String nom;
     private int pointsDeVie;
     private int force;
@@ -49,4 +49,10 @@ public class Personnage {
     public void mort(){
         System.out.println("Le personnage meurt");
     }
+
+    /**
+     * Méthode pour faire interagir le personnage
+     */
+    @Override
+    public void interaction(String nom){ System.out.println("Le " + this.nom + " interagit."); }
 }
