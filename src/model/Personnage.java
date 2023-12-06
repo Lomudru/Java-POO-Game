@@ -46,4 +46,7 @@ public class Personnage {
     public void defendre(){
         System.out.println("Il se défend");
     }
+    public void mort(){
+        System.out.println("Le personnage meurt");
+    }
 }

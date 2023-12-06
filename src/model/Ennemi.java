@@ -4,8 +4,8 @@ public class Ennemi extends Personnage {
     private String type;
     private String loot;
 
-    public Ennemi(String nom, int pointsDeVie, int force, String type, String loot) {
-        super(nom, pointsDeVie, force);
+    public Ennemi(String nom, int pointsDeVie, int force, String race, String classe, String type, String loot) {
+        super(nom, pointsDeVie, force, race, classe);
         this.type = type;
         this.loot = loot;
     }
@@ -34,6 +34,7 @@ public class Ennemi extends Personnage {
     public void defendre(){
         System.out.println("L'ennemi se defend");
     }
+    @Override
     public void mort(){
         System.out.println("L'ennemi est mort");
     }
