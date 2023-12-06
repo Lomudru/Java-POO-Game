@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * La classe slime est une sous-classe de la classe ennemi
+ */
 public class Slime extends Ennemi {
     private String couloeur;
     private String element;
@@ -23,6 +26,9 @@ public class Slime extends Ennemi {
         this.element = element;
     }
 
+    /**
+     * La classe regen qui fait en sorte de régénérer la vie du slime
+     */
     public void regen(){
         System.out.println("Le slime se régénère");
     }
