@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * La classe Joueur qui est un sous-classe de la classe Personnage
+ */
 public class Joueur extends Personnage {
     private String classe;
     private String passif;
@@ -31,10 +34,10 @@ public class Joueur extends Personnage {
         this.statistique = statistique;
     }
 
+    /**
+     * La methode déplacer qui permet au joueur de se déplacer
+     */
     public void deplacer(){
         System.out.println("Le joueur se deplace");
-    }
-    public void interaction(){
-        System.out.println("Le joueur interragit avec quelque chose");
     }
 }

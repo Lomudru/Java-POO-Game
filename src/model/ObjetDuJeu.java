@@ -1,13 +1,16 @@
 package model;
 
-public abstract class Objet {
+/**
+ * La classe abstraite ObjetDuJeu
+ */
+public abstract class ObjetDuJeu {
     private String nom;
     private int rarete;
     private String description;
     private int nombreDutilisation;
     private boolean consomable;
 
-    public Objet(String nom, int rarete, String description, int nombreDutilisation, boolean consomable) {
+    public ObjetDuJeu(String nom, int rarete, String description, int nombreDutilisation, boolean consomable) {
         this.nom = nom;
         this.rarete = rarete;
         this.description = description;
@@ -45,10 +48,15 @@ public abstract class Objet {
     public void setConsomable(boolean consomable) {
         this.consomable = consomable;
     }
-
+    /**
+     * La methode disaparaitre qui fait disparaitre l'objet
+     */
     public void disparaitre(){
         System.out.println("L'objet disparait");
     }
+    /**
+     * La methode disaparaitre qui fait apparaitre l'objet
+     */
     public void apparaitre(){
         System.out.println("L'objet apparait");
     }

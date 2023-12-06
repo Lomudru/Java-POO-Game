@@ -1,5 +1,8 @@
 package model;
 
+/**
+ * La classe Peronnage
+ */
 public class Personnage {
     private String nom;
     private int pointsDeVie;
@@ -40,12 +43,23 @@ public class Personnage {
         this.force = force;
     }
 
+    /**
+     * La methode attaquer qui fait attaquer le personnage
+     */
     public void attaquer(){
         System.out.println("Il Attaque");
     }
+
+    /**
+     * La methode defendre qui fait se défendre le personnage
+     */
     public void defendre(){
         System.out.println("Il se défend");
     }
+
+    /**
+     * La methode mort qui fait mourir le personnage
+     */
     public void mort(){
         System.out.println("Le personnage meurt");
     }

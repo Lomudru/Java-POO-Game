@@ -1,6 +1,9 @@
 package model;
 
-public class Arme extends Objet {
+/**
+ * La classe Arme qui est une sous-classe de la classe ObjetDuJeu
+ */
+public class Arme extends ObjetDuJeu {
     private String type;
     private int durabilite;
     private int degat;
@@ -46,9 +49,15 @@ public class Arme extends Objet {
         this.degat = degat;
     }
 
+    /**
+     * La methode effetSecondaire qui fait utiliser le passif de l'arme
+     */
     public void effetSecondaire(){
         System.out.println("L'arme utilise son passif");
     }
+    /**
+     * La methode casser qui fait casser l'arme
+     */
     public void casser(){
         System.out.println("L'arme se casse");
     }
