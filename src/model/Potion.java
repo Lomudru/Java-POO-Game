@@ -28,10 +28,12 @@ public class Potion extends ObjetDuJeu{
     public void setDuree(int duree) {
         this.duree = duree;
     }
+
     /**
      * La methode appliquerEffet qui applique l'effet de la potion
      */
     public void appliquerEffet(){
         System.out.println("L'effet de la potion a été appliquer");
     }
+
 }

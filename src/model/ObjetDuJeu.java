@@ -3,7 +3,7 @@ package model;
 /**
  * La classe abstraite ObjetDuJeu
  */
-public abstract class ObjetDuJeu {
+public abstract class ObjetDuJeu implements Interactuable{
     private String nom;
     private int rarete;
     private String description;
@@ -59,5 +59,10 @@ public abstract class ObjetDuJeu {
      */
     public void apparaitre(){
         System.out.println("L'objet apparait");
+    }
+
+    @Override
+    public void interaction(Object nom) {
+        System.out.println("interaction avec " + getNom());
     }
 }

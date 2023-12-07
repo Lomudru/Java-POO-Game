@@ -7,7 +7,7 @@ public class Slime extends Ennemi {
     private String couloeur;
     private String element;
 
-    public Slime(String nom, int pointsDeVie, int force, String race, String type, String loot, String couloeur, String element) {
+    public Slime(String nom, int pointsDeVie, int force, String race, String type, int loot, String couloeur, String element) {
         super(nom, pointsDeVie, force, race, type, loot);
         this.couloeur = couloeur;
         this.element = element;
@@ -26,6 +26,17 @@ public class Slime extends Ennemi {
         this.element = element;
     }
 
+    @Override
+    public void attaquer(Object ennemi) {
+        super.attaquer(ennemi);
+        setPointsDeVie(getPointsDeVie() + 5);
+        setForce(getForce() - 5);
+    }
+    @Override
+    public void defendre() {
+        super.defendre();
+        setPointsDeVie(getPointsDeVie() + 10);
+    }
     /**
      * La classe regen qui fait en sorte de régénérer la vie du slime
      */

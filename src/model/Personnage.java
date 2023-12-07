@@ -24,35 +24,42 @@ public class Personnage implements Interactuable {
     public String getNom() {
         return nom;
     }
+
     public void setNom(String nom) {
         this.nom = nom;
     }
+
     public int getPointsDeVie() {
         return pointsDeVie;
     }
+
     public void setPointsDeVie(int pointsDeVie) {
         this.pointsDeVie = pointsDeVie;
     }
+
     public int getForce() {
         return force;
     }
+
     public void setForce(int force) {
         this.force = force;
     }
 
-    public void attaquer(){
+    public void attaquer(Object ennemi) {
         System.out.println("Il Attaque");
     }
-    public void defendre(){
+
+    public void defendre() {
         System.out.println("Il se défend");
     }
-    public void mort(){
+
+    public void mort() {
         System.out.println("Le personnage meurt");
     }
 
-    /**
-     * Méthode pour faire interagir le personnage
-     */
     @Override
-    public void interaction(String nom){ System.out.println("Le " + this.nom + " interagit."); }
+    public void interaction(Object nom) {
+        System.out.println("interaction avec " + getNom());
+    }
+
 }
