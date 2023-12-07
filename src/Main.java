@@ -124,6 +124,13 @@ public class Main {
             }
         } else if ("Inventaire".equals(emplacement)) {
             System.out.println("Vous etes dans votre inventaire");
+            if (joueur.getInventaire().length > 0){
+                for (int i = 0; i < joueur.getInventaire().length; i++){
+                    System.out.println(joueur.getInventaire()[i].getNom() + " : " + joueur.getInventaire()[i].getDescription());
+                }
+            }else {
+                System.out.println("Votre inventaire est vide");
+            }
         }
     }
     public static void main(String[] args) {
