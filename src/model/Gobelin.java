@@ -9,18 +9,6 @@ public class Gobelin extends Ennemi{
         this.environement = environement;
     }
 
-    @Override
-    public void attaquer(Object ennemi) {
-        super.attaquer(ennemi);
-        setPointsDeVie(getPointsDeVie() - 5);
-        setForce(getForce() + 5);
-    }
-    @Override
-    public void defendre() {
-        super.defendre();
-        setPointsDeVie(getPointsDeVie() + 5);
-    }
-
     public String getEnvironement() {
         return environement;
     }

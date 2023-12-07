@@ -9,15 +9,26 @@ public class Arme extends ObjetDuJeu {
     private int degat;
     private String passif;
     private int porte;
+    private boolean equipe;
 
-    public Arme(String nom, int rarete, String description, int nombreDutilisation, boolean consomable, String type, int durabilite, int degat, String passif, int porte) {
+    public Arme(String nom, int rarete, String description, int nombreDutilisation, boolean consomable, String type, int durabilite, int degat, String passif, int porte, boolean equipe) {
         super(nom, rarete, description, nombreDutilisation, consomable);
         this.type = type;
         this.durabilite = durabilite;
         this.degat = degat;
         this.passif = passif;
         this.porte = porte;
+        this.equipe = equipe;
     }
+
+    public boolean isEquipe() {
+        return equipe;
+    }
+
+    public void setEquipe(boolean equipe) {
+        this.equipe = equipe;
+    }
+
     public int getPorte() {
         return porte;
     }

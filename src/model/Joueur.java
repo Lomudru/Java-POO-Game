@@ -1,5 +1,4 @@
 package model;
-
 import java.util.ArrayList;
 
 /**
@@ -8,10 +7,10 @@ import java.util.ArrayList;
 public class Joueur extends Personnage{
     private String classe;
     private String passif;
-    private ArrayList<String> inventaire;
+    private ObjetDuJeu[] inventaire;
     private int argent;
 
-    public Joueur(String nom, int pointsDeVie, int force, String race, String classe, String passif, ArrayList<String> inventaire, int argent) {
+    public Joueur(String nom, int pointsDeVie, int force, String race, String classe, String passif, ObjetDuJeu[] inventaire, int argent) {
         super(nom, pointsDeVie, force, race);
         this.classe = classe;
         this.passif = passif;
@@ -31,10 +30,10 @@ public class Joueur extends Personnage{
     public void setPassif(String passif) {
         this.passif = passif;
     }
-    public ArrayList<String> getInventaire() {
+    public ObjetDuJeu[] getInventaire() {
         return inventaire;
     }
-    public void setInventaire(ArrayList<String> inventaire) {
+    public void setInventaire(ObjetDuJeu[] inventaire) {
         this.inventaire = inventaire;
     }
     public int getArgent() {
@@ -45,15 +44,21 @@ public class Joueur extends Personnage{
     }
 
     @Override
-    public void attaquer(Object ennemi) {
-        super.attaquer(ennemi);
-        setPointsDeVie(getPointsDeVie() + 20);
-        setForce(getForce() + 10);
+    public int attaquer(Ennemi ennemi) {
+        int FinalAttack = this.getForce();
+        if (this.inventaire.length > 0){
+            for (int i = 0; i < this.inventaire.length; i++){
+                if (this.inventaire[i].getNom().equals("Epée")){
+                    FinalAttack += 2;
+                }
+            }
+        }
+        ennemi.setPointsDeVie(ennemi.getPointsDeVie() - FinalAttack);
+        return FinalAttack;
     }
     @Override
     public void defendre() {
-        super.defendre();
-        setPointsDeVie(getPointsDeVie() + 10);
+        System.out.println("Vous vous Défendez");
     }
 
     /**

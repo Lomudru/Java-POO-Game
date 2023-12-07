@@ -32,19 +32,25 @@ public class Ennemi extends Personnage implements Interactuable {
     /**
      * Override de la methode attaquer
      */
-    @Override
-    public void attaquer(Object ennemi){
-        super.attaquer(ennemi);
-        setPointsDeVie(getPointsDeVie() + 10);
-        setForce(getForce() + 10);
+    public int attaquer(Joueur joueur){
+        int FinalAttack = this.getForce();
+        /*
+        if (this.getInventaire().length > 0){
+            for (int i = 0; i < this.inventaire.length; i++){
+                if (this.inventaire[i].getNom().equals("Epée")){
+                    FinalAttack += 2;
+                }
+            }
+        }*/
+        joueur.setPointsDeVie(joueur.getPointsDeVie() - FinalAttack);
+        return FinalAttack;
     }
     /**
      * Override de la methode defendre
      */
     @Override
     public void defendre() {
-        super.defendre();
-        setPointsDeVie(getPointsDeVie() + 5);
+        System.out.println("Le Gobelin se defend");
     }
     /**
      * Override de la methode mort

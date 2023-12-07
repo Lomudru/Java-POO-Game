@@ -25,18 +25,6 @@ public class Slime extends Ennemi {
     public void setElement(String element) {
         this.element = element;
     }
-
-    @Override
-    public void attaquer(Object ennemi) {
-        super.attaquer(ennemi);
-        setPointsDeVie(getPointsDeVie() + 5);
-        setForce(getForce() - 5);
-    }
-    @Override
-    public void defendre() {
-        super.defendre();
-        setPointsDeVie(getPointsDeVie() + 10);
-    }
     /**
      * La classe regen qui fait en sorte de régénérer la vie du slime
      */

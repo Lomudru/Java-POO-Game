@@ -45,8 +45,9 @@ public class Personnage implements Interactuable {
         this.force = force;
     }
 
-    public void attaquer(Object ennemi) {
+    public int attaquer(Ennemi ennemi) {
         System.out.println("Il Attaque");
+        return 0;
     }
 
     public void defendre() {
