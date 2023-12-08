@@ -50,7 +50,7 @@ public class Joueur extends Personnage{
     }
     @Override
     public void defendre() {
-        System.out.println("Vous vous Défendez");
+        System.out.println("Vous vous défendez");
     }
 
     /**

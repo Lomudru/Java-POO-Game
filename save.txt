@@ -1,5 +1,0 @@
-Nom : Mitake;
-Classe : Tank;
-Race : Nain;
-Argent : 15;
-Vie : 23

@@ -49,7 +49,7 @@ public class Ennemi extends Personnage implements Interactuable {
      */
     @Override
     public void defendre() {
-        System.out.println("Le monstre se defend");
+        System.out.println("Le monstre se défend");
     }
     /**
      * Override de la methode mort

@@ -1,20 +1,27 @@
-
 import model.*;
 import java.io.*;
-import java.util.*;
+import java.util.Scanner;
+import java.awt.Desktop;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
     /**
      * Méthode qui permet de faire des actions dans le jeu.
+     *
      * @param joueur
      */
 
-    public static void emplacement(Joueur joueur){
+    public static void emplacement(Joueur joueur) {
         /** -> Commence par afficher les informations basiques du joueur (PV et Gold). */
         System.out.println("Vous avez " + joueur.getPointsDeVie() + " PV");
         System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
+        if ("François".equals(joueur.getNom())) {
+            System.out.println("Par votre grand charisme, vous gagnez 100 points de force ! Vous avez donc : " + joueur.getForce());
+        }
         /**
          * -> Initialise le booléen save à true par défaut et devient faux si le joueur meurt (permettra de supprimer
          * le fichier de sauvegarde)
@@ -44,7 +51,7 @@ public class Main {
             Arme epee = new Arme("Epée", 1, "Ajoute +2 en attaque", 99, false, "Arme", 25, 2, "Aucun", 3, false);
             Arme bouclier = new Arme("Bouclier", 1, "Ajoute +5 en défense", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
             ObjetDuJeu[] invMonstre = {null};
-            if (Weapon == 0){
+            if (Weapon == 0) {
                 invMonstre[0] = epee;
             } else if (Weapon == 1) {
                 invMonstre[0] = bouclier;
@@ -66,7 +73,7 @@ public class Main {
                     couleur = "GOD";
                     element = "GOD";
                 }
-                Slime slime = new Slime("Slime de " + element, 20, 3, "Slime", invMonstre,"Monstre", 10, couleur, element);
+                Slime slime = new Slime("Slime de " + element, 20, 3, "Slime", invMonstre, "Monstre", 10, couleur, element);
                 System.out.println("Vous combattez un " + slime.getNom());
                 monster = slime;
             } else if (espece == 1) {
@@ -79,7 +86,7 @@ public class Main {
                 } else if (randomGobelin == 2) {
                     environement = "Grottes";
                 }
-                Gobelin gobelin = new Gobelin("Gobelin des " + environement, 8, 10, "Gobelin", invMonstre ,"Monstre", 10, environement);
+                Gobelin gobelin = new Gobelin("Gobelin des " + environement, 8, 10, "Gobelin", invMonstre, "Monstre", 10, environement);
                 System.out.println("Vous combater un " + gobelin.getNom());
                 monster = gobelin;
             }
@@ -108,25 +115,25 @@ public class Main {
                  * Le joueur attaque.
                  */
                 if ("1".equals(action)) {
-                    if (monstreAction == 1){
+                    if (monstreAction == 1) {
                         System.out.println("Le monstre se défend");
-                    }else {
+                    } else {
                         joueur.attaquer(monster);
                     }
-                /**
-                 * Le joueur se défend.
-                 */
+                    /**
+                     * Le joueur se défend.
+                     */
                 } else if ("2".equals(action)) {
                     joueur.defendre();
-                /**
-                 * Le joueur ouvre son inventaire.
-                 */
+                    /**
+                     * Le joueur ouvre son inventaire.
+                     */
                 } else if ("3".equals(action)) {
-                    if (joueur.getInventaire().length > 0){
-                        for (int i = 0; i < joueur.getInventaire().length; i++){
+                    if (joueur.getInventaire().length > 0) {
+                        for (int i = 0; i < joueur.getInventaire().length; i++) {
                             System.out.println(joueur.getInventaire()[i].getNom() + " : " + joueur.getInventaire()[i].getDescription());
                         }
-                    }else {
+                    } else {
                         System.out.println("Votre inventaire est vide");
                     }
                 }
@@ -134,37 +141,43 @@ public class Main {
                  * Tour du monstre.
                  * Le monstre attaque.
                  */
-                if (monstreAction == 0){
+                if (monstreAction == 0) {
                     System.out.println("Le montre vous attaque");
-                    if ("2".equals(action)){
+                    if ("2".equals(action)) {
                         System.out.println("Vous parez l'attaque");
-                    }else {
+                    } else {
                         monster.attaquer(joueur);
                     }
-                /**
-                 * Le monstre se défend.
-                 */
+                    /**
+                     * Le monstre se défend.
+                     */
                 } else if (monstreAction == 1) {
                     monster.defendre();
                 /**
                  * Le monstre ne fait rien.
                  */
-                } else if (monstreAction == 2){
+                } else if (monstreAction == 2) {
                     System.out.println("Le monstre se repose");
                 }
                 /**
                  * Si le monstre n'a plus de PV, il meurt, le joueur gagne de l'argent et son argent s'affiche.
                  */
-                if (monster.getPointsDeVie() <= 0){
+                if (monster.getPointsDeVie() <= 0) {
                     System.out.println("Vous avez tué le monstre");
-                    System.out.println("Vous gagnez " + monster.getLoot() + " GOLD");
-                    joueur.setArgent(joueur.getArgent() + monster.getLoot());
+                    if ("Humain".equals(joueur.getRace())) {
+                        System.out.println("Vous gagnez " + monster.getLoot() + " GOLD. Malheureusement, les humains sont " +
+                                "sujets à la TVA. Vous gagnez donc en fait " + monster.getLoot() / 2 + " GOLD !");
+                        joueur.setArgent(joueur.getArgent() + monster.getLoot() / 2);
+                    } else {
+                        System.out.println("Vous gagnez " + monster.getLoot() + " GOLD");
+                        joueur.setArgent(joueur.getArgent() + monster.getLoot());
+                    }
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
                 /**
                  * Si le joueur n'a plus de PV, il meurt et la partie est finie.
                  */
-                if (joueur.getPointsDeVie() <= 0){
+                if (joueur.getPointsDeVie() <= 0) {
                     System.out.println("Le monstre vous a tué. EZ");
                     System.out.println("Votre sauvegarde est supprimée.");
                     /**
@@ -175,7 +188,7 @@ public class Main {
                         writer.write("");
                         writer.close();
                         save = false;
-                    }catch (Exception e){
+                    } catch (Exception e) {
                         System.out.println("Erreur avec la sauvegarde");
                     }
                 }
@@ -183,7 +196,7 @@ public class Main {
         }
         /**
          * -> Boutique ouvre la boutique.
-         * Les objets sont générés et le jouer
+         * Les objets sont générés et le joueur rentre le numéro de l'item qu'il souhaite acheter.
          */
         else if ("Boutique".equals(emplacement)) {
             Arme epee = new Arme("Epée", 1, "Ajoute +2 en attaque", 99, false, "Arme", 25, 2, "Aucun", 3, false);
@@ -202,55 +215,55 @@ public class Main {
              * Si le joueur a assez de GOLD, l'achat est effectué et l'objet est placé dans l'inventaire. Sinon, un
              * message d'erreur s'affiche.
              */
-            if ("1".equals(choix)){
-                if (joueur.getArgent() >= 10){
+            if ("1".equals(choix)) {
+                if (joueur.getArgent() >= 10) {
                     ObjetDuJeu[] tempInv = {epee};
                     joueur.setInventaire(tempInv);
                     System.out.println("Vous avez acheté une Épée !");
                     joueur.setArgent(joueur.getArgent() - 10);
-                }else {
+                } else {
                     System.out.println("Vous n'avez pas assez d'argent pour payer ! Sale pauvre !");
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
             } else if ("2".equals(choix)) {
-                if (joueur.getArgent() >= 10){
+                if (joueur.getArgent() >= 10) {
                     ObjetDuJeu[] tempInv = {bouclier};
                     joueur.setInventaire(tempInv);
                     System.out.println("Vous avez acheté un Bouclier !");
                     joueur.setPointsDeVie(joueur.getPointsDeVie() + 10);
                     joueur.setArgent(joueur.getArgent() - 10);
-                }else {
+                } else {
                     System.out.println("Vous n'avez pas assez d'argent pour payer ! Sale pauvre !");
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
-            }else if ("3".equals(choix)){
-                if (joueur.getArgent() >= 5){
+            } else if ("3".equals(choix)) {
+                if (joueur.getArgent() >= 5) {
                     joueur.setPointsDeVie(joueur.getPointsDeVie() + 5);
                     System.out.println("Vous avez acheté une Potion. Vous la consommez et régénerez 5 PV. Vous avez " +
                             "maintenant " + joueur.getPointsDeVie() + " PV.");
                     joueur.setArgent(joueur.getArgent() - 5);
-                }else {
+                } else {
                     System.out.println("Vous n'avez pas assez d'argent pour payer ! Sale pauvre !");
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
             }
-        /**
-         * Inventaire affiche l'inventaire du joueur.
-         */
+            /**
+             * Inventaire affiche l'inventaire du joueur.
+             */
         } else if ("Inventaire".equals(emplacement)) {
             System.out.println("Vous êtes dans votre inventaire !");
-            if (joueur.getInventaire().length > 0){
-                for (int i = 0; i < joueur.getInventaire().length; i++){
+            if (joueur.getInventaire().length > 0) {
+                for (int i = 0; i < joueur.getInventaire().length; i++) {
                     System.out.println(joueur.getInventaire()[i].getNom() + " : " + joueur.getInventaire()[i].getDescription());
                 }
-            }else {
+            } else {
                 System.out.println("Votre inventaire est vide !");
             }
         }
         /**
          * Après chaque action (Combat, boutique, inventaire), la partie est sauvegardée.
          */
-        if (save){
+        if (save) {
             try {
                 BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt"));
                 writer.write("Nom : " + joueur.getNom());
@@ -258,9 +271,10 @@ public class Main {
                 writer.write(";\nRace : " + joueur.getRace());
                 writer.write(";\nArgent : " + joueur.getArgent());
                 writer.write(";\nVie : " + joueur.getPointsDeVie());
+                writer.write(";\nForce : " + joueur.getForce());
                 writer.close();
                 System.out.println("Sauvegarde effectuée !");
-            }catch (Exception e){
+            } catch (Exception e) {
                 System.out.println("Erreur avec la sauvegarde.");
             }
         }
@@ -268,6 +282,7 @@ public class Main {
 
     /**
      * Méthode principale : lance l'initialisation du joueur et le fait jouer tant qu'il est vivant.
+     *
      * @param args
      */
     public static void main(String[] args) {
@@ -282,16 +297,16 @@ public class Main {
             FileReader fr = new FileReader(file);
             BufferedReader br = new BufferedReader(fr);
             String line;
-            while((line = br.readLine()) != null){
+            while ((line = br.readLine()) != null) {
                 result += line;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             System.out.println("Il y a eu une erreur lors de la lecture du fichier de sauvegarde.");
         }
         /**
          * Si aucun fichier sauvegarde n'a été trouvé, le joueur initialise son personnage.
          */
-        if (result == ""){
+        if (result == "") {
             System.out.println("Bienvenue");
             System.out.println("Saissisez votre nom :");
             String name = clavier.next();
@@ -311,50 +326,65 @@ public class Main {
             int life = 20;
             int strenght = 2;
             int argent = 0;
-            if ("Guerrier".equals(classe)){
+            if ("François".equals(name)) {
+                strenght += 100;
+            }
+            if ("Guerrier".equals(classe)) {
                 life += 5;
                 strenght += 5;
-            }
-            else if("Archer".equals(classe)){
+            } else if ("Archer".equals(classe)) {
                 life -= 5;
                 strenght += 7;
-            }
-            else if("Tank".equals(classe)){
+            } else if ("Tank".equals(classe)) {
                 life += 20;
                 strenght += 1;
             }
 
-            if ("Humain".equals(race)){
+            if ("Humain".equals(race)) {
                 life += 5;
                 strenght += 1;
                 argent -= 10;
-            }
-            else if ("Nain".equals(race)) {
+            } else if ("Nain".equals(race)) {
                 strenght += 6;
                 argent += 10;
-            }
-            else if ("Elfe".equals(race)) {
+            } else if ("Elfe".equals(race)) {
                 life += 10;
                 strenght += 2;
             }
             joueur = new Joueur(name, life, strenght, race, classe, "Vitalite", inv, argent);
             System.out.println("Votre Personnage a été créé !");
-        /**
-         * Si un fichier sauvergarde a été trouvé, les infos sont rangées dans un array et utilisées pour initialiser
-         * le joueur.
-         */
-        }else {
+            /**
+             * Si un fichier sauvergarde a été trouvé, les infos sont rangées dans un array et utilisées pour initialiser
+             * le joueur.
+             */
+        } else {
             String[] resultArray = result.split(";");
-            for (int i = 0; i < resultArray.length; i++){
+            for (int i = 0; i < resultArray.length; i++) {
                 String[] temp = resultArray[i].split(" : ");
                 resultArray[i] = temp[temp.length - 1];
             }
             ObjetDuJeu[] inv = {};
-            joueur = new Joueur(resultArray[0], Integer.parseInt(resultArray[4]), 2, resultArray[2], resultArray[1], "Vitalite", inv, Integer.parseInt(resultArray[3]));
-            System.out.println("Bienvenue " + joueur.getNom());
+            joueur = new Joueur(resultArray[0], Integer.parseInt(resultArray[4]), Integer.parseInt(resultArray[5]), resultArray[2], resultArray[1], "Vitalite", inv, Integer.parseInt(resultArray[3]));
+            System.out.println("Bienvenue " + joueur.getNom() + " ! ");
         }
-        while (joueur.getPointsDeVie() > 0){
+        if("Rick".equals(joueur.getNom())){
+            redirectToWebPage("https://www.youtube.com/watch?v=xvFZjo5PgG0");
+        }
+        while (joueur.getPointsDeVie() > 0) {
             emplacement(joueur);
+        }
+    }
+
+    private static void redirectToWebPage(String url) {
+        try {
+            Desktop desktop = Desktop.getDesktop();
+            if (Desktop.isDesktopSupported() && desktop.isSupported(Desktop.Action.BROWSE)) {
+                URI uri = new URI(url);
+                desktop.browse(uri);
+            }
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            // Handle the exception (e.g., log, display an error message, etc.)
         }
     }
 }

@@ -20,6 +20,6 @@ public class Gobelin extends Ennemi{
      * La methode vol permet au gobelin de voler le joueur
      */
     public void vol(){
-        System.out.println("Le gobelin vol le joueur");
+        System.out.println("Le gobelin vole le joueur");
     }
 }
