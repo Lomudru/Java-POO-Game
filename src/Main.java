@@ -19,9 +19,6 @@ public class Main {
         /** -> Commence par afficher les informations basiques du joueur (PV et Gold). */
         System.out.println("Vous avez " + joueur.getPointsDeVie() + " PV");
         System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
-        if ("François".equals(joueur.getNom())) {
-            System.out.println("Par votre grand charisme, vous gagnez 100 points de force ! Vous avez donc : " + joueur.getForce());
-        }
         /**
          * -> Initialise le booléen save à true par défaut et devient faux si le joueur meurt (permettra de supprimer
          * le fichier de sauvegarde)
@@ -60,12 +57,16 @@ public class Main {
                 int randomSlime = (int) (Math.random() * 3);
                 String couleur;
                 String element;
+                int vie = 20;
+                int force = 5;
                 if (randomSlime == 0) {
                     couleur = "Vert";
                     element = "Terre";
+                    vie += 10;
                 } else if (randomSlime == 1) {
                     couleur = "Rouge";
                     element = "Feu";
+                    force += 5;
                 } else if (randomSlime == 2) {
                     couleur = "Bleu";
                     element = "l'Eau";
@@ -73,20 +74,24 @@ public class Main {
                     couleur = "GOD";
                     element = "GOD";
                 }
-                Slime slime = new Slime("Slime de " + element, 20, 3, "Slime", invMonstre, "Monstre", 10, couleur, element);
+                Slime slime = new Slime("Slime de " + element, vie, force, "Slime", invMonstre, "Monstre", 10, couleur, element);
                 System.out.println("Vous combattez un " + slime.getNom());
                 monster = slime;
             } else if (espece == 1) {
                 int randomGobelin = (int) (Math.random() * 3);
                 String environement = "GOD";
+                int vie = 10;
+                int force = 11;
                 if (randomGobelin == 0) {
                     environement = "Plaines";
                 } else if (randomGobelin == 1) {
                     environement = "Montagnes";
+                    vie += 10;
                 } else if (randomGobelin == 2) {
                     environement = "Grottes";
+                    force += 5;
                 }
-                Gobelin gobelin = new Gobelin("Gobelin des " + environement, 8, 10, "Gobelin", invMonstre, "Monstre", 10, environement);
+                Gobelin gobelin = new Gobelin("Gobelin des " + environement, vie, force, "Gobelin", invMonstre, "Monstre", 10, environement);
                 System.out.println("Vous combater un " + gobelin.getNom());
                 monster = gobelin;
             }
@@ -310,13 +315,13 @@ public class Main {
             System.out.println("Bienvenue");
             System.out.println("Saissisez votre nom :");
             String name = clavier.next();
-            System.out.println("Choisissez une classe : \n Guerrier, \n Archer, \n Tank.");
+            System.out.println("Choisissez une classe : \n - Guerrier \n - Archer \n - Tank");
             String classe = clavier.next();
             while (!"Guerrier".equals(classe) && !"Archer".equals(classe) && !"Tank".equals(classe)) {
                 System.out.println("Veuillez choisir une classe qui existe.");
                 classe = clavier.next();
             }
-            System.out.println("Choisissez une race : \n Humain, \n Nain, \n Elfe.");
+            System.out.println("Choisissez une race : \n - Humain \n - Nain \n - Elfe");
             String race = clavier.next();
             while (!"Humain".equals(race) && !"Nain".equals(race) && !"Elfe".equals(race)) {
                 System.out.println("Veuillez choisir une race qui existe.");
@@ -366,6 +371,9 @@ public class Main {
             ObjetDuJeu[] inv = {};
             joueur = new Joueur(resultArray[0], Integer.parseInt(resultArray[4]), Integer.parseInt(resultArray[5]), resultArray[2], resultArray[1], "Vitalite", inv, Integer.parseInt(resultArray[3]));
             System.out.println("Bienvenue " + joueur.getNom() + " ! ");
+        }
+        if ("François".equals(joueur.getNom())) {
+            System.out.println("Par votre grand charisme, vous gagnez 100 points de force ! Vous avez donc : " + joueur.getForce());
         }
         if("Rick".equals(joueur.getNom())){
             redirectToWebPage("https://www.youtube.com/watch?v=xvFZjo5PgG0");

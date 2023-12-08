@@ -1,0 +1,6 @@
+Nom : François;
+Classe : Archer;
+Race : Nain;
+Argent : 20;
+Vie : 15;
+Force : 115
