@@ -205,14 +205,15 @@ public class Main {
          */
         else if ("Boutique".equals(emplacement)) {
             Arme epee = new Arme("Epée", 1, "Ajoute +2 en attaque", 99, false, "Arme", 25, 2, "Aucun", 3, false);
-            Arme bouclier = new Arme("Bouclier", 1, "Ajoute +10 en defense", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
+            Arme bouclier = new Arme("Bouclier", 1, "Ajoute +10 en pv", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
             Potion potionDeVie = new Potion("Potion de vie", 1, "Régénère 5 point de vie immédiatement apres l'achat", 1, true, "+5", 0);
             System.out.println("Bienvenue dans la boutique. Vous avez " + joueur.getArgent() + " GOLD. Choisissez un article et cassez vous <3 !");
-            System.out.println("1. " + epee.getNom() + "  10 GOLD");
-            System.out.println("2. " + bouclier.getNom() + "  10 GOLD");
-            System.out.println("3. " + potionDeVie.getNom() + "  5 GOLD");
+            System.out.println("1. " + epee.getNom() + "  10 GOLD ( " + epee.getDescription() +" )");
+            System.out.println("2. " + bouclier.getNom() + "  10 GOLD ( " + bouclier.getDescription() + " )");
+            System.out.println("3. " + potionDeVie.getNom() + "  5 GOLD ( " + potionDeVie.getDescription() + " )" );
+            System.out.println("4. Quitter");
             String choix = clavier.next();
-            while (!"1".equals(choix) && !"2".equals(choix) && !"3".equals(choix)) {
+            while (!"1".equals(choix) && !"2".equals(choix) && !"3".equals(choix) && !"4".equals(choix)) {
                 System.out.println("Veuillez choisir un article (marquez le nombre) !");
                 choix = clavier.next();
             }
@@ -251,6 +252,8 @@ public class Main {
                     System.out.println("Vous n'avez pas assez d'argent pour payer ! Sale pauvre !");
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
+            } else if ("4".equals(choix)) {
+                System.out.println("Vous quitter la boutique");
             }
             /**
              * Inventaire affiche l'inventaire du joueur.
