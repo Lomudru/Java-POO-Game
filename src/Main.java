@@ -273,7 +273,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner clavier = new Scanner(System.in);
         String result = "";
-        Joueur joueur;
+        Joueur joueur = null;
         /**
          * Si un fichier sauvegarde existe, il est lu ligne par ligne et écrit dans la variable result.
          */
@@ -308,7 +308,36 @@ public class Main {
                 race = clavier.next();
             }
             ObjetDuJeu[] inv = {};
-            joueur = new Joueur(name, 20, 2, race, classe, "Vitalite", inv, 0);
+            int life = 20;
+            int strenght = 2;
+            int argent = 0;
+            if ("Guerrier".equals(classe)){
+                life += 5;
+                strenght += 5;
+            }
+            else if("Archer".equals(classe)){
+                life -= 5;
+                strenght += 7;
+            }
+            else if("Tank".equals(classe)){
+                life += 20;
+                strenght += 1;
+            }
+
+            if ("Humain".equals(race)){
+                life += 5;
+                strenght += 1;
+                argent -= 10;
+            }
+            else if ("Nain".equals(race)) {
+                strenght += 6;
+                argent += 10;
+            }
+            else if ("Elfe".equals(race)) {
+                life += 10;
+                strenght += 2;
+            }
+            joueur = new Joueur(name, life, strenght, race, classe, "Vitalite", inv, argent);
             System.out.println("Votre Personnage a été créé !");
         /**
          * Si un fichier sauvergarde a été trouvé, les infos sont rangées dans un array et utilisées pour initialiser
