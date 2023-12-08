@@ -1,12 +1,16 @@
-import model.*;
 
-import java.time.temporal.Temporal;
+import model.*;
+import java.io.*;
 import java.util.*;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
 public class Main {
+
     public static void emplacement(Joueur joueur){
+        System.out.println("Vous avez " + joueur.getPointsDeVie() + " PV");
+        System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
+        boolean save = true;
         Scanner clavier = new Scanner(System.in);
         System.out.println("Que voulez faire ? \n Jouer \n Boutique \n Inventaire");
         String emplacement = clavier.next();
@@ -17,6 +21,15 @@ public class Main {
         if ("Jouer".equals(emplacement)) {
             Ennemi monster = null;
             int espece = (int) (Math.random() * 2);
+            int Weapon = (int) (Math.random() * 2);
+            Arme epee = new Arme("Epée", 1, "Ajoute +2 en attaque", 99, false, "Arme", 25, 2, "Aucun", 3, false);
+            Arme bouclier = new Arme("Bouclier", 1, "Ajoute +5 en defense", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
+            ObjetDuJeu[] invMonstre = {null};
+            if (Weapon == 0){
+                invMonstre[0] = epee;
+            } else if (Weapon == 1) {
+                invMonstre[0] = bouclier;
+            }
             if (espece == 0) {
                 int randomSlime = (int) (Math.random() * 3);
                 String couleur;
@@ -34,7 +47,7 @@ public class Main {
                     couleur = "GOD";
                     element = "GOD";
                 }
-                Slime slime = new Slime("Slime de " + element, 10, 5, "Slime", "Monstre", 10, couleur, element);
+                Slime slime = new Slime("Slime de " + element, 20, 3, "Slime", invMonstre,"Monstre", 10, couleur, element);
                 System.out.println("Vous combater un " + slime.getNom());
                 monster = slime;
             } else if (espece == 1) {
@@ -47,7 +60,7 @@ public class Main {
                 } else if (randomGobelin == 2) {
                     environement = "Grottes";
                 }
-                Gobelin gobelin = new Gobelin("Gobelin des " + environement, 10, 5, "Gobelin", "Monstre", 10, environement);
+                Gobelin gobelin = new Gobelin("Gobelin des " + environement, 8, 10, "Gobelin", invMonstre ,"Monstre", 10, environement);
                 System.out.println("Vous combater un " + gobelin.getNom());
                 monster = gobelin;
             }
@@ -95,17 +108,28 @@ public class Main {
                     System.out.println("Vous gagnez " + monster.getLoot() + " GOLD");
                     joueur.setArgent(joueur.getArgent() + monster.getLoot());
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
-                    joueur.setPointsDeVie(20);
+                }
+                if (joueur.getPointsDeVie() <= 0){
+                    System.out.println("Le monstre vous a tuer");
+                    System.out.println("Votre sauvegarde est supprimer");
+                    try {
+                        BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt"));
+                        writer.write("");
+                        writer.close();
+                        save = false;
+                    }catch (Exception e){
+                        System.out.println("Erreur avec la sauvegarde");
+                    }
                 }
             }
         } else if ("Boutique".equals(emplacement)) {
             Arme epee = new Arme("Epée", 1, "Ajoute +2 en attaque", 99, false, "Arme", 25, 2, "Aucun", 3, false);
-            Arme bouclier = new Arme("Bouclier", 1, "Ajoute +5 en defense", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
-            Potion potionDeVie = new Potion("Potion de vie", 1, "Régénère 5 point de vie", 1, true, "+5", 0);
+            Arme bouclier = new Arme("Bouclier", 1, "Ajoute +10 en defense", 99, false, "Bouclier", 25, 0, "Aucun", 0, false);
+            Potion potionDeVie = new Potion("Potion de vie", 1, "Régénère 5 point de vie immédiatement apres l'achat", 1, true, "+5", 0);
             System.out.println("Bienvenue dans la boutique, choissisez un atricle et casser vous :");
             System.out.println("1. " + epee.getNom() + "  10 GOLD");
             System.out.println("2. " + bouclier.getNom() + "  10 GOLD");
-            System.out.println("3. " + potionDeVie.getNom() + "  10 GOLD");
+            System.out.println("3. " + potionDeVie.getNom() + "  5 GOLD");
             String choix = clavier.next();
             while (!"1".equals(choix) && !"2".equals(choix) && !"3".equals(choix)) {
                 System.out.println("Veilliez choissir un article ( marquer le nombre )");
@@ -121,6 +145,26 @@ public class Main {
                     System.out.println("Vous n'avez pas assez d'argent pour payer");
                     System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
                 }
+            } else if ("2".equals(choix)) {
+                if (joueur.getArgent() >= 10){
+                    ObjetDuJeu[] tempInv = {bouclier};
+                    joueur.setInventaire(tempInv);
+                    System.out.println("Vous avez acheter un Bouclier");
+                    joueur.setPointsDeVie(joueur.getPointsDeVie() + 10);
+                    joueur.setArgent(joueur.getArgent() - 10);
+                }else {
+                    System.out.println("Vous n'avez pas assez d'argent pour payer");
+                    System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
+                }
+            }else if ("3".equals(choix)){
+                if (joueur.getArgent() >= 5){
+                    joueur.setPointsDeVie(joueur.getPointsDeVie() + 5);
+                    System.out.println("Vous avez utiliser une Potion");
+                    joueur.setArgent(joueur.getArgent() - 5);
+                }else {
+                    System.out.println("Vous n'avez pas assez d'argent pour payer");
+                    System.out.println("Vous avez " + joueur.getArgent() + " GOLD");
+                }
             }
         } else if ("Inventaire".equals(emplacement)) {
             System.out.println("Vous etes dans votre inventaire");
@@ -132,27 +176,66 @@ public class Main {
                 System.out.println("Votre inventaire est vide");
             }
         }
+        if (save){
+            try {
+                BufferedWriter writer = new BufferedWriter(new FileWriter("save.txt"));
+                writer.write("Nom : " + joueur.getNom());
+                writer.write(";\nClasse : " + joueur.getClasse());
+                writer.write(";\nRace : " + joueur.getRace());
+                writer.write(";\nArgent : " + joueur.getArgent());
+                writer.write(";\nVie : " + joueur.getPointsDeVie());
+                writer.close();
+                System.out.println("Sauvegarde effectuer");
+            }catch (Exception e){
+                System.out.println("Erreur avec la sauvegarde");
+            }
+        }
     }
     public static void main(String[] args) {
         Scanner clavier = new Scanner(System.in);
-        System.out.println("Bienvenue");
-        System.out.println("Saissisez votre nom :");
-        String name = clavier.next();
-        System.out.println("Choissisez un classe entre : \n Guerrier \n Archer \n Tank");
-        String classe = clavier.next();
-        while (!"Guerrier".equals(classe) && !"Archer".equals(classe) && !"Tank".equals(classe)) {
-            System.out.println("Veuillier choissir une classe qui existe");
-            classe = clavier.next();
+        String result = "";
+        Joueur joueur;
+        try {
+            File file = new File("save.txt");
+            FileReader fr = new FileReader(file);
+            BufferedReader br = new BufferedReader(fr);
+            String line;
+            while((line = br.readLine()) != null){
+                result += line;
+            }
+        }catch (Exception e){
+            System.out.println("Il y as eu une erreur a la lecture du fichier");
         }
-        System.out.println("Choissiser une race \n Humain \n Nain \n Elfe");
-        String race = clavier.next();
-        while (!"Humain".equals(race) && !"Nain".equals(race) && !"Elfe".equals(race)) {
-            System.out.println("Veuillier choissir une race qui existe");
-            race = clavier.next();
+        if (result == ""){
+            System.out.println("Bienvenue");
+            System.out.println("Saissisez votre nom :");
+            String name = clavier.next();
+            System.out.println("Choissisez un classe entre : \n Guerrier \n Archer \n Tank");
+            String classe = clavier.next();
+            while (!"Guerrier".equals(classe) && !"Archer".equals(classe) && !"Tank".equals(classe)) {
+                System.out.println("Veuillier choissir une classe qui existe");
+                classe = clavier.next();
+            }
+            System.out.println("Choissiser une race \n Humain \n Nain \n Elfe");
+            String race = clavier.next();
+            while (!"Humain".equals(race) && !"Nain".equals(race) && !"Elfe".equals(race)) {
+                System.out.println("Veuillier choissir une race qui existe");
+                race = clavier.next();
+            }
+            ObjetDuJeu[] inv = {};
+            joueur = new Joueur(name, 20, 2, race, classe, "Vitalite", inv, 0);
+            System.out.println("Votre Personnage a été créer");
+
+        }else {
+            String[] resultArray = result.split(";");
+            for (int i = 0; i < resultArray.length; i++){
+                String[] temp = resultArray[i].split(" : ");
+                resultArray[i] = temp[temp.length - 1];
+            }
+            ObjetDuJeu[] inv = {};
+            joueur = new Joueur(resultArray[0], Integer.parseInt(resultArray[4]), 2, resultArray[2], resultArray[1], "Vitalite", inv, Integer.parseInt(resultArray[3]));
+            System.out.println("Bienvenue " + joueur.getNom());
         }
-        ObjetDuJeu[] inv = {};
-        Joueur joueur = new Joueur(name, 20, 2, race, classe, "Vitalite", inv, 0);
-        System.out.println("Votre Personnage a été créer");
         while (joueur.getPointsDeVie() > 0){
             emplacement(joueur);
         }

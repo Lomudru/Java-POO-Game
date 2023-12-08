@@ -7,14 +7,12 @@ import java.util.ArrayList;
 public class Joueur extends Personnage{
     private String classe;
     private String passif;
-    private ObjetDuJeu[] inventaire;
     private int argent;
 
-    public Joueur(String nom, int pointsDeVie, int force, String race, String classe, String passif, ObjetDuJeu[] inventaire, int argent) {
-        super(nom, pointsDeVie, force, race);
+    public Joueur(String nom, int pointsDeVie, int force, String race, String classe, String passif, ObjetDuJeu[] inventaire , int argent) {
+        super(nom, pointsDeVie, force, race, inventaire);
         this.classe = classe;
         this.passif = passif;
-        this.inventaire = inventaire;
         this.argent = argent;
     }
 
@@ -30,12 +28,6 @@ public class Joueur extends Personnage{
     public void setPassif(String passif) {
         this.passif = passif;
     }
-    public ObjetDuJeu[] getInventaire() {
-        return inventaire;
-    }
-    public void setInventaire(ObjetDuJeu[] inventaire) {
-        this.inventaire = inventaire;
-    }
     public int getArgent() {
         return argent;
     }
@@ -46,9 +38,9 @@ public class Joueur extends Personnage{
     @Override
     public int attaquer(Ennemi ennemi) {
         int FinalAttack = this.getForce();
-        if (this.inventaire.length > 0){
-            for (int i = 0; i < this.inventaire.length; i++){
-                if (this.inventaire[i].getNom().equals("Epée")){
+        if (super.getInventaire().length > 0){
+            for (int i = 0; i < super.getInventaire().length; i++){
+                if (super.getInventaire()[i].getNom().equals("Epée")){
                     FinalAttack += 2;
                 }
             }

@@ -5,12 +5,22 @@ public class Personnage implements Interactuable {
     private int pointsDeVie;
     private int force;
     private String race;
+    private ObjetDuJeu[] inventaire;
 
-    public Personnage(String nom, int pointsDeVie, int force, String race) {
+    public Personnage(String nom, int pointsDeVie, int force, String race, ObjetDuJeu[] inventaire) {
         this.nom = nom;
         this.pointsDeVie = pointsDeVie;
         this.force = force;
         this.race = race;
+        this.inventaire = inventaire;
+    }
+
+    public ObjetDuJeu[] getInventaire() {
+        return inventaire;
+    }
+
+    public void setInventaire(ObjetDuJeu[] inventaire) {
+        this.inventaire = inventaire;
     }
 
     public String getRace() {

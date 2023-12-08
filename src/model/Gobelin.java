@@ -4,8 +4,9 @@ package model;
  */
 public class Gobelin extends Ennemi{
     private String environement;
-    public Gobelin(String nom, int pointsDeVie, int force, String race, String type, int loot, String environement) {
-        super(nom, pointsDeVie, force, race, type, loot);
+
+    public Gobelin(String nom, int pointsDeVie, int force, String race, ObjetDuJeu[] inventaire, String type, int loot, String environement) {
+        super(nom, pointsDeVie, force, race, inventaire, type, loot);
         this.environement = environement;
     }
 
